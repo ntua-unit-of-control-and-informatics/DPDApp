@@ -12,20 +12,20 @@ with st.form("my_form"):
     submitted = st.form_submit_button("Submit")
 
     if submitted:
-        try:
-            number = int(number)
-            if number > 0:
-                st.write("You have given the integer", number)
-                st.session_state['number'] = number
-            else:
-                st.write("The integer should be greater than zero")
-        except ValueError:
-            st.write("This is not an integer")
+        try:
+            number = int(number)
+            if number > 0:
+                st.write("You have given the integer", number)
+                st.session_state['number'] = number
+            else:
+                st.write("The integer should be greater than zero")
+        except ValueError:
+            st.write("This is not an integer")
 
 if 'number' in st.session_state:
-    with st.form("second_form"):
+    with st.form("second_form"):
 
-        df = pd.DataFrame(
+        df = pd.DataFrame(
             [
                {"command": "st.selectbox", "rating": 4, "is_widget": True},
                {"command": "st.balloons", "rating": 5, "is_widget": False},
@@ -41,6 +41,6 @@ if 'number' in st.session_state:
            st.dataframe(edited_df)
 
 if st.button("Reset"):
-    if 'number' in st.session_state:
-        del st.session_state['number']
-    st.experimental_rerun()
+    if 'number' in st.session_state:
+        del st.session_state['number']
+    st.experimental_rerun()
