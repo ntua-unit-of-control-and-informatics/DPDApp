@@ -43,4 +43,4 @@ if 'number' in st.session_state:
 if st.button("Reset"):
     if 'number' in st.session_state:
         del st.session_state['number']
-    st.experimental_rerun()
+    st.rerun()
