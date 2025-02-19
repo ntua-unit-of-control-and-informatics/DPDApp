@@ -26,19 +26,19 @@ if 'number' in st.session_state:
     with st.form("second_form"):
 
         df = pd.DataFrame(
-            [
-               {"command": "st.selectbox", "rating": 4, "is_widget": True},
-               {"command": "st.balloons", "rating": 5, "is_widget": False},
-               {"command": "st.time_input", "rating": 3, "is_widget": True},
-           ]
-        )
+            [
+                {"command": "st.selectbox", "rating": 4, "is_widget": True},
+                {"command": "st.balloons", "rating": 5, "is_widget": False},
+                {"command": "st.time_input", "rating": 3, "is_widget": True},
+            ]
+        )
 
-        edited_df = st.data_editor(df)
-        #st.dataframe(df)
-        submit = st.form_submit_button("Submit")
+        edited_df = st.data_editor(df)
+        #st.dataframe(df)
+        submit = st.form_submit_button("Submit")
 
-        if submit:
-           st.dataframe(edited_df)
+        if submit:
+            st.dataframe(edited_df)
 
 if st.button("Reset"):
     if 'number' in st.session_state:
