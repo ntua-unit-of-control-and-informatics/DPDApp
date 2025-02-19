@@ -7,11 +7,11 @@ st.header("Parametrization using Groot De Warren")
 st.text("This is supposed to be the parametrization for DPD models ")
 
 with st.form("my_form"):
-    st.write("Inside the form")
-    number = st.text_input("Give the number of elements it must be an integer")
-    submitted = st.form_submit_button("Submit")
+    st.write("Inside the form")
+    number = st.text_input("Give the number of elements it must be an integer")
+    submitted = st.form_submit_button("Submit")
 
-    if submitted:
+    if submitted:
         try:
             number = int(number)
             if number > 0:
