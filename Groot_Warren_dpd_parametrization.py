@@ -2,8 +2,6 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-submit = False
-
 st.header("Parametrization of DPD models using the Groot - De Warren approach")
 
 st.text("This is a WebApp for the parametrization of DPD models using the Groot De Warren methodology. "
@@ -61,7 +59,7 @@ if all(x in st.session_state for x in ['number', 'temperature', 'density']):
 
         submit = st.form_submit_button("Submit")
 
-if submit:
+if submit in st.session_state:
     with st.container(border=True):
         st.write("DPD interaction parameters")
 
@@ -83,5 +81,7 @@ if st.button("Reset"):
         del st.session_state['temperature']
     if 'density' in st.session_state:
         del st.session_state['density']
+    if 'submit' in st.session_state:
+        del st.session_state['submit']
 
     st.rerun()
