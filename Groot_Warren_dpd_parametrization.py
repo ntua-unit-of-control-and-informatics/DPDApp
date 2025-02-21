@@ -85,6 +85,6 @@ if st.button("Reset"):
     if 'density' in st.session_state:
         del st.session_state['density']
     if 'edited_df' in st.session_state:
-        del st.session_state['submit']
+        del st.session_state['edited_df']
 
     st.rerun()
