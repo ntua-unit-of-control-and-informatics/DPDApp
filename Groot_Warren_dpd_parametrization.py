@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+submit = False
+
 st.header("Parametrization of DPD models using the Groot - De Warren approach")
 
 st.text("This is a WebApp for the parametrization of DPD models using the Groot De Warren methodology. "
