@@ -56,22 +56,25 @@ if all(x in st.session_state for x in ['number', 'temperature', 'density']):
     with st.form("second_form"):
         st.write("Flory–Huggins parameters")
 
-        df = pd.DataFrame(
-            [
-                {"command": "st.selectbox", "rating": 4, "is_widget": True},
-                {"command": "st.balloons", "rating": 5, "is_widget": False},
-                {"command": "st.time_input", "rating": 3, "is_widget": True},
-            ]
-        )
-
+        df = pd.DataFrame(0, index = np.arange(1, number+1, 1), columns=np.arange(1, number+1,1))
         edited_df = st.data_editor(df)
-        #st.dataframe(df)
+
         submit = st.form_submit_button("Submit")
 
 if submit:
     with st.container(border=True):
         st.write("DPD interaction parameters")
+
+        # set the diagonal terms
+        for i in range(0, number):
+            edited_df.iloc[i,i] = 75.0 * temperature / density
+
+        # set the off-diagonal terms
+
         st.dataframe(edited_df)
+
+        pressure = density * temperature + 0.101 * np.power(density, 3) * edited_df.iloc[0,0]
+        st.write("The expected pressure in DPD units is:", pressure)
 
 if st.button("Reset"):
     if 'number' in st.session_state:
