@@ -2,52 +2,55 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-st.header("Parametrization using Groot De Warren")
+st.header("Parametrization of DPD models using the Groot - De Warren approach")
 
-st.text("This is supposed to be the parametrization for DPD models"
+st.text("This is a WebApp for the parametrization of DPD models using the Groot De Warren methodology. "
         "The reference is 'Dissipative particle dynamics: "
-        "Bridging the gap between atomistic and mesoscopic simulation'"
+        "Bridging the gap between atomistic and mesoscopic simulation' "
         "J. Chem. Phys. DOI:10.1063/1.474784")
+
+st.text("This WebApp was created by Evangelos Voyiatzis.")
 
 with st.form("my_form"):
     st.write("System Properties")
-    temperature = st.text_input("System temperature in DPD units usually 1.0 [float]")
-    density = st.text_input("System number density in DPD units usually 3.0 [float]")
+    temperature = st.text_input("Temperature in DPD units usually 1.0 [float]")
+    density = st.text_input("Number density in DPD units usually 3.0 [float]")
     number = st.text_input("Number of DPD bead types in the system [integer]")
+    selected_formula = st.radio("Choose formula for cross parameters:", [r"$\rho=3.0$", r"$\rho=5.0$"])
     submitted = st.form_submit_button("Submit")
 
     if submitted:
         try:
-            number = int(number)
-            if number > 0:
-                st.write("You have given the integer", number)
-                st.session_state['number'] = number
-            else:
-                st.write("The integer should be greater than zero")
-        except ValueError:
-            st.write("This is not an integer")
-
-        try:
             temperature = float(temperature)
             if temperature > 0:
-                st.write("You have given the float", temperature)
+                st.write("The temperature is:", temperature)
                 st.session_state['temperature'] = temperature
             else:
                 st.write("The temperature should be greater than zero")
         except ValueError:
-            st.write("This is not a temperature")
+            st.write("You have not entered a valid temperature")
 
         try:
             density = float(density)
             if density > 0:
-                st.write("You have given the float", density)
+                st.write("The number density is:", density)
                 st.session_state['density'] = density
             else:
                 st.write("The density should be greater than zero")
         except ValueError:
-            st.write("This is not a density")
+            st.write("You have not entered a valid density")
 
-if 'number' in st.session_state and 'temperature' in st.session_state and 'density' in st.session_state:
+        try:
+            number = int(number)
+            if number > 0:
+                st.write("The number of DPD bead types is:", number)
+                st.session_state['number'] = number
+            else:
+                st.write("The number of DPD bead types should be greater than zero")
+        except ValueError:
+            st.write("You have not entered a valid number of DPD bead types")
+
+if all(x in st.session_state for x in ['number', 'temperature', 'density']):
     with st.form("second_form"):
 
         df = pd.DataFrame(
