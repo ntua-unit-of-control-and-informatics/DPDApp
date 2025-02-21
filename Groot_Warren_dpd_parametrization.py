@@ -59,7 +59,7 @@ if all(x in st.session_state for x in ['number', 'temperature', 'density']):
 
         submit = st.form_submit_button("Submit")
 
-if submit in st.session_state:
+if 'submit' in st.session_state:
     with st.container(border=True):
         st.write("DPD interaction parameters")
 
