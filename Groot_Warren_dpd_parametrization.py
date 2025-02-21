@@ -74,7 +74,7 @@ if 'edited_df' in st.session_state:
 
         st.dataframe(st.session_state.edited_df)
 
-        pressure = st.session_state.density * st.session_state.temperature + 0.101 * np.power(st.session_state.density, 3) * edited_df.iloc[0,0]
+        pressure = st.session_state.density * st.session_state.temperature + 0.101 * st.session_state.density * st.session_state.density * edited_df.iloc[0,0]
         st.write("The expected pressure in DPD units is:", pressure)
 
 if st.button("Reset"):
