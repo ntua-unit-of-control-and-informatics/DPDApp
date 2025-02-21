@@ -68,8 +68,8 @@ if all(x in st.session_state for x in ['number', 'temperature', 'density']):
         #st.dataframe(df)
         submit = st.form_submit_button("Submit")
 
-if submit and all(x in st.session_state for x in ['number', 'temperature', 'density']):
-    with st.container():
+if submit:
+    with st.container(border=True):
         st.write("DPD interaction parameters")
         st.dataframe(edited_df)
 
