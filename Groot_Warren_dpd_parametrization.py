@@ -59,17 +59,17 @@ if all(x in st.session_state for x in ['number', 'temperature', 'density']):
 
         submit = st.form_submit_button("Submit")
 
-if 'submit' in st.session_state:
+if 'edited_df' in st.session_state:
     with st.container(border=True):
         st.write("DPD interaction parameters")
 
         # set the diagonal terms
         for i in range(0, st.session_state.number):
-            edited_df.iloc[i,i] = 75.0 * st.session_state.temperature / st.session_state.density
+            st.session_state.edited_df.iloc[i,i] = 75.0 * st.session_state.temperature / st.session_state.density
 
         # set the off-diagonal terms
 
-        st.dataframe(edited_df)
+        st.dataframe(st.session_state.edited_df)
 
         pressure = st.session_state.density * st.session_state.temperature + 0.101 * np.power(st.session_state.density, 3) * edited_df.iloc[0,0]
         st.write("The expected pressure in DPD units is:", pressure)
@@ -81,7 +81,7 @@ if st.button("Reset"):
         del st.session_state['temperature']
     if 'density' in st.session_state:
         del st.session_state['density']
-    if 'submit' in st.session_state:
+    if 'edited_df' in st.session_state:
         del st.session_state['submit']
 
     st.rerun()
