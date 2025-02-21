@@ -52,6 +52,7 @@ with st.form("my_form"):
 
 if all(x in st.session_state for x in ['number', 'temperature', 'density']):
     with st.form("second_form"):
+        st.write("Flory–Huggins parameters")
 
         df = pd.DataFrame(
             [
@@ -66,7 +67,9 @@ if all(x in st.session_state for x in ['number', 'temperature', 'density']):
         submit = st.form_submit_button("Submit")
 
         if submit:
-            st.dataframe(edited_df)
+            with st.form("third_form"):
+                st.write("DPD interaction parameters")
+                st.dataframe(edited_df)
 
 if st.button("Reset"):
     if 'number' in st.session_state:
