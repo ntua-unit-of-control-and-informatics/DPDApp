@@ -4,11 +4,16 @@ import streamlit as st
 
 st.header("Parametrization using Groot De Warren")
 
-st.text("This is supposed to be the parametrization for DPD models ")
+st.text("This is supposed to be the parametrization for DPD models"
+        "The reference is 'Dissipative particle dynamics: "
+        "Bridging the gap between atomistic and mesoscopic simulation'"
+        "J. Chem. Phys. DOI:10.1063/1.474784")
 
 with st.form("my_form"):
-    st.write("Inside the form")
-    number = st.text_input("Give the number of elements it must be an integer")
+    st.write("System Properties")
+    temperature = st.text_input("System temperature in DPD units usually 1.0 [float]")
+    density = st.text_input("System number density in DPD units usually 3.0 [float]")
+    number = st.text_input("Number of DPD bead types in the system [integer]")
     submitted = st.form_submit_button("Submit")
 
     if submitted:
@@ -22,7 +27,27 @@ with st.form("my_form"):
         except ValueError:
             st.write("This is not an integer")
 
-if 'number' in st.session_state:
+        try:
+            temperature = float(temperature)
+            if temperature > 0:
+                st.write("You have given the float", temperature)
+                st.session_state['temperature'] = temperature
+            else:
+                st.write("The temperature should be greater than zero")
+        except ValueError:
+            st.write("This is not a temperature")
+
+        try:
+            density = float(density)
+            if density > 0:
+                st.write("You have given the float", density)
+                st.session_state['density'] = density
+            else:
+                st.write("The density should be greater than zero")
+        except ValueError:
+            st.write("This is not a density")
+
+if 'number' in st.session_state and 'temperature' in st.session_state and 'density' in st.session_state:
     with st.form("second_form"):
 
         df = pd.DataFrame(
@@ -43,4 +68,9 @@ if 'number' in st.session_state:
 if st.button("Reset"):
     if 'number' in st.session_state:
         del st.session_state['number']
+    if 'temperature' in st.session_state:
+        del st.session_state['temperature']
+    if 'density' in st.session_state:
+        del st.session_state['density']
+
     st.rerun()
