@@ -12,7 +12,7 @@ st.text("This is a WebApp for the parametrization of DPD models using the Groot 
 st.text("This WebApp was created by Evangelos Voyiatzis.")
 
 with st.form("my_form"):
-    st.write("System Properties")
+    st.write("**System Properties**")
     temperature = st.text_input("Temperature in DPD units usually 1.0 [float]")
     density = st.text_input("Number density in DPD units usually 3.0 [float]")
     number = st.text_input("Number of DPD bead types in the system [integer]")
@@ -26,7 +26,7 @@ with st.form("my_form"):
         try:
             temperature = float(temperature)
             if temperature > 0:
-                st.write("The temperature is:", temperature)
+                st.write("The temperature is: {temperature}")
                 st.session_state['temperature'] = temperature
             else:
                 st.write("The temperature should be greater than zero")
@@ -36,7 +36,7 @@ with st.form("my_form"):
         try:
             density = float(density)
             if density > 0:
-                st.write("The number density is:", density)
+                st.write(f"The number density is: {density}")
                 st.session_state['density'] = density
             else:
                 st.write("The density should be greater than zero")
@@ -46,7 +46,7 @@ with st.form("my_form"):
         try:
             number = int(number)
             if number > 0:
-                st.write("The number of DPD bead types is:", number)
+                st.write("The number of DPD bead types is: {number}")
                 st.session_state['number'] = number
             else:
                 st.write("The number of DPD bead types should be greater than zero")
@@ -55,7 +55,7 @@ with st.form("my_form"):
 
 if all(x in st.session_state for x in ['number', 'temperature', 'density']):
     with st.form("second_form"):
-        st.write("Flory–Huggins parameters")
+        st.write("**Flory–Huggins parameters**")
 
         df = pd.DataFrame(0, index = np.arange(1, st.session_state.number+1, 1), columns=np.arange(1, st.session_state.number+1,1))
         edited_df = st.data_editor(df)
@@ -67,7 +67,7 @@ if all(x in st.session_state for x in ['number', 'temperature', 'density']):
 
 if 'edited_df' in st.session_state:
     with st.container(border=True):
-        st.write("DPD interaction parameters")
+        st.write("**DPD interaction parameters**")
 
         # set the diagonal terms
         for i in range(0, st.session_state.number):
@@ -92,7 +92,7 @@ if 'edited_df' in st.session_state:
         st.dataframe(st.session_state.edited_df)
 
         pressure = st.session_state.density * st.session_state.temperature + 0.101 * st.session_state.density * st.session_state.density * edited_df.iloc[0,0]
-        st.write("The expected pressure in DPD units is:", pressure)
+        st.write(f"The expected pressure in DPD units is: {pressure}")
 
 if st.button("Reset"):
     if 'number' in st.session_state:
