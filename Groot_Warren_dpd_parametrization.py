@@ -57,7 +57,7 @@ if all(x in st.session_state for x in ['number', 'temperature', 'density']):
     with st.form("second_form"):
         st.write("**Flory–Huggins parameters**")
 
-        df = pd.DataFrame(0, index = np.arange(1, st.session_state.number+1, 1), columns=np.arange(1, st.session_state.number+1,1), dtype=float64)
+        df = pd.DataFrame(0, index = np.arange(1, st.session_state.number+1, 1), columns=np.arange(1, st.session_state.number+1,1), dtypes=float64)
         edited_df = st.data_editor(df)
 
         submit = st.form_submit_button("Submit")
