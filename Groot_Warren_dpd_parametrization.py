@@ -20,6 +20,9 @@ with st.form("my_form"):
     submitted = st.form_submit_button("Submit")
 
     if submitted:
+
+        st.session_state['selected_formula'] = selected_formula
+
         try:
             temperature = float(temperature)
             if temperature > 0:
@@ -71,7 +74,21 @@ if 'edited_df' in st.session_state:
             st.session_state.edited_df.iloc[i,i] = 75.0 * st.session_state.temperature / st.session_state.density
 
         # set the off-diagonal terms
+        if st.session_state.selected_formula == r"$\rho=3.0$":
 
+            for i in range(0, st.session_state.number):
+                for j in range(i+1, st.session_state.number):
+                    st.session_state.edited_df.iloc[i,j] = st.session_state.edited_df.iloc[i,i] + st.session_state.edited_df.iloc[i,j] / 0.286
+                    st.session_state.edited_df.iloc[j,i] = st.session_state.edited_df.iloc[i,j]
+
+        else:
+
+            for i in range(0, st.session_state.number):
+                for j in range(i+1, st.session_state.number):
+                    st.session_state.edited_df.iloc[i,j] = st.session_state.edited_df.iloc[i,i] + st.session_state.edited_df.iloc[i,j] / 0.689
+                    st.session_state.edited_df.iloc[j,i] = st.session_state.edited_df.iloc[i,j]
+
+        # print the frame to screen
         st.dataframe(st.session_state.edited_df)
 
         pressure = st.session_state.density * st.session_state.temperature + 0.101 * st.session_state.density * st.session_state.density * edited_df.iloc[0,0]
@@ -86,5 +103,7 @@ if st.button("Reset"):
         del st.session_state['density']
     if 'edited_df' in st.session_state:
         del st.session_state['edited_df']
+    if 'selected_formula' in st.session_state:
+        del st.session_state['selected_formula']
 
     st.rerun()
