@@ -26,7 +26,7 @@ with st.form("my_form"):
         try:
             temperature = float(temperature)
             if temperature > 0:
-                st.write("The temperature is: {temperature}")
+                st.write(f"The temperature is: {temperature}")
                 st.session_state['temperature'] = temperature
             else:
                 st.write("The temperature should be greater than zero")
@@ -46,7 +46,7 @@ with st.form("my_form"):
         try:
             number = int(number)
             if number > 0:
-                st.write("The number of DPD bead types is: {number}")
+                st.write(f"The number of DPD bead types is: {number}")
                 st.session_state['number'] = number
             else:
                 st.write("The number of DPD bead types should be greater than zero")
@@ -57,7 +57,7 @@ if all(x in st.session_state for x in ['number', 'temperature', 'density']):
     with st.form("second_form"):
         st.write("**Flory–Huggins parameters**")
 
-        df = pd.DataFrame(0, index = np.arange(1, st.session_state.number+1, 1), columns=np.arange(1, st.session_state.number+1,1))
+        df = pd.DataFrame(0, index = np.arange(1, st.session_state.number+1, 1), columns=np.arange(1, st.session_state.number+1,1), dtype=float64)
         edited_df = st.data_editor(df)
 
         submit = st.form_submit_button("Submit")
